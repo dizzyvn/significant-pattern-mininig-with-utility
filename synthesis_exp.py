@@ -1,7 +1,6 @@
 """ Synthesis experiment """
 import sys
 import collections
-
 import numpy as np
 from tqdm import tqdm
 from func.data_generator import norm_data_generator
@@ -22,31 +21,31 @@ def spur(hypotheses, p_values, alpha=0.05):
     p_values = np.copy(p_values)
 
     # Initialization
-    bucket = alpha  # current significant butget
+    sigma = alpha  # current significant butget
     ignored = np.zeros(p_values.shape)  # indicators ignored hypotheses
     rejected = []  # rejected hypotheses
     last_p = 0  # p_min of the last iteration
 
     # SPUR
     while 1:
-        # step 5: Calculate the threshold
-        tau_t = n - np.sum(ignored)  # See proof of Proposition 5.1
-        threshold = bucket / tau_t + last_p
+        # step 5: Calculate the sigma
+        tau = n - np.sum(ignored)  # See proof of Proposition 5.1
+        sigma = sigma / tau + last_p
 
         # step 6 and 7: Get the index and the p-value of
         # the most significant hypothesis
-        min_p_index = np.argmin(p_values)
-        min_p = p_values[min_p_index]
+        min_p_idx = np.argmin(p_values)
+        min_p = p_values[min_p_idx]
 
         # step 8: Reject rule
-        if min_p <= threshold:
-            # step 9: update bucket
-            bucket = bucket - tau_t * (min_p - last_p) + min_p
+        if min_p <= sigma:
+            # step 9: update sigma
+            sigma = sigma - tau * (min_p - last_p) + min_p
             last_p = min_p
-            rejected.append(min_p_index)  # step 11: Reject hypothesis
+            rejected.append(min_p_idx)  # step 11: Reject hypothesis
             # step 12: Masking for ignored hypotheses
-            ignored[: min_p_index + 1] = 1
-            p_values[: min_p_index + 1] = np.infty  # also mask the p-values
+            ignored[: min_p_idx + 1] = 1
+            p_values[: min_p_idx + 1] = np.infty  # also mask the p-values
         else:
             break
 
@@ -91,8 +90,8 @@ def weighted_bonferroni(hypotheses, p_values, weight="linear", alpha=0.05):
         w = (np.arange(n) + 1).astype(float)
 
     w /= np.sum(w)
-    threshold = alpha * w
-    rejected = np.where(p_values <= threshold)[0]
+    sigma = alpha * w
+    rejected = np.where(p_values <= sigma)[0]
 
     return rejected
 
@@ -116,18 +115,18 @@ def invalid_spur(hypotheses, p_values, alpha=0.05):
     while 1:
         # Get the "original index" and the p-value of
         # the most significant hypothesis
-        min_p_index = np.argmin(p_values)
-        min_p = p_values[min_p_index]
+        min_p_idx = np.argmin(p_values)
+        min_p = p_values[min_p_idx]
 
-        # Calculate the threshold
-        tau_t = n - np.sum(ignored)
-        threshold = alpha / tau_t
+        # Calculate the sigma
+        tau = n - np.sum(ignored)
+        sigma = alpha / tau
 
         # Reject rule
-        if min_p <= threshold:
-            rejected.append(min_p_index)
-            ignored[: min_p_index + 1] = 1  # Remove uninteresting hypotheses
-            p_values[: min_p_index + 1] = np.infty  # Also mask the p-values
+        if min_p <= sigma:
+            rejected.append(min_p_idx)
+            ignored[: min_p_idx + 1] = 1  # Remove uninteresting hypotheses
+            p_values[: min_p_idx + 1] = np.infty  # Also mask the p-values
         else:
             break
 

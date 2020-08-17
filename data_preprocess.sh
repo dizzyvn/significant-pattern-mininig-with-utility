@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # Make dirs
-mkdir ./data
 mkdir ./data/preprocessed
 
 # Preprocess

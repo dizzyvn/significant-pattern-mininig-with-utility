@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 from matplotlib import pyplot as plt
-from exp_1 import methods, exps, sub_dir
+from synthesis_exp import methods, exps, sub_dir
 from func.func import open_file, str_to_array
 
 
@@ -158,11 +158,11 @@ if __name__ == "__main__":
     plt.show()
 
     # ===== Printing result for latex's table format =====
-    # for method in methods:
-    #     s = f"{method} "
-    #     for exp in exps:
-    #         s += "& %.3f " % _fwer[exp][method]
-    #     for exp in exps:
-    #         s += "& %.3f " % _count[exp][method]
-    #     s += "\\\\"
-    #     print(s)
+    for method in methods:
+        s = f"{method} "
+        for exp in exps:
+            s += "& %.3f " % _fwer[exp][method]
+        for exp in exps:
+            s += "& %.3f " % _count[exp][method]
+        s += "\\\\"
+        print(s)
