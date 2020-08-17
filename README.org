@@ -5,16 +5,33 @@ Thien Q. Tran, Kazuto Fukuchi, Youhei Akimoto and Jun Sakuma
 SPUR stands for [S]ignificant [P]attern Mining with [U]tility [R]elationship, a method that allows preference relation between patterns and aims to find out the most useful patterns under the constraint of statistical significance.
 
 *** What is special about SPUR compared to other methods?
-SPUR introduce a novel iterative multiple testing procedure which is able to alternately reject a hypothesis and *safely* ignore some other hypotheses. Thus, in SPUR's discovering process, after discovering a significant pattern, SPUR can ignore less useful patterns compared to the discovered one. As a result, SPUR can save the significance budget for discovering other useful patterns. Moreover, it can leverage the Tarone-trick to deal with large amount of patterns.
+SPUR introduce a novel iterative multiple testing procedure which is able to alternately reject a hypothesis and *safely* ignore some other hypotheses. To be specific, after discovered a significant pattern, SPUR can *safely* ignore less useful patterns compared to the discovered pattern. As a result, SPUR can save the significance budget for discovering other useful patterns. Moreover, it can leverage the Tarone's trick to deal with large amount of patterns.
 
 *** Is SPUR applicable to all Statistically Significant Pattern Mining (SSPM) problem?
-Actually, NO. Our testing procedure relied on an assumption that the p-values obtained from the true patterns and the false patterns are independent. At the moment, we found that this assumption holds when the test to use is Fisher's exact test, and the pattern set is designed to separate the dataset into non-overlap subsets. Please consider reading our paper for more details.
+No. Our testing procedure control the FWER under an assumption that the p-values obtained from the true patterns and the false patterns are independent. At the moment, we found that this assumption holds when the test to use is Fisher's exact test, and the pattern set is designed to separate the dataset into non-overlap subsets. Please consider reading our paper for more details.
 
 ** Requirements
 See requirements.txt for a list of python dependencies to run our code.
 
 ** How to reprocedure our experiments.
-#+BEGIN_SRC python
+*** Synthesis experiment
+#+BEGIN_SRC sh
 python synthesis_exp.py
 python synthesis_exp_summarizer.py
+#+END_SRC
+*** Real-world dataset experiment
+/Data preparation/: We note that the used data is upload in this repository since the data from the source is updated regularly and the result would be different.
+#+BEGIN_SRC sh
+sh data_preprocess.sh
+#+END_SRC
+
+/To run an experiment:/
+#+BEGIN_SRC sh
+python real_data_exp.py [task] [alpha]
+#+END_SRC
+where *task* in [crash, adult, property, person, society] and *alpha* is the significant level.
+
+/To run all experiments/:
+#+BEGIN_SRC sh
+sh real_data_run_all.sh
 #+END_SRC
