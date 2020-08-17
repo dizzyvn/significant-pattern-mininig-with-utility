@@ -37,7 +37,7 @@ def min_p_calc(n_T, N, N_pos):
 # We first load the data
 # and use both train and test data
 adult_train = pd.read_csv('data/adult/adult.data.csv', header=None)
-adult_test = pd.read_csv('data/adult/adult.test.csv', skiprows=0, header=None)
+adult_test = pd.read_csv('data/adult/adult.test.csv', skiprows=1, header=None)
 df = pd.concat([adult_train, adult_test])
 columns = ['age', 'workclass', 'fnlwgt', 'education', 'education-num',
            'marital-status', 'occupation', 'relationship', 'race', 'sex',
