@@ -35,3 +35,6 @@ where *task* in [crash, adult, property, person, society] and *alpha* is the sig
 #+BEGIN_SRC sh
 sh real_data_run_all.sh
 #+END_SRC
+
+** Supplementary material
+The full proof of Theorem 6.1 (FWER controlling) can be found in /supplementary.pdf/
