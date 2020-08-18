@@ -1,4 +1,4 @@
-* Statistically Significant Pattern Mining with Ordinal Utility (SPUR) [KDD2020]
+* [KDD2020] Statistically Significant Pattern Mining with Ordinal Utility (SPUR)
 Thien Q. Tran, Kazuto Fukuchi, Youhei Akimoto and Jun Sakuma
 
 ** What is SPUR?
